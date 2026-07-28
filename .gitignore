@@ -1,0 +1,27 @@
+# Executables & Binaries
+SmartHomeOS.exe
+*.exe
+*.out
+*.app
+
+# Compiled Object Files & Libraries
+*.o
+*.obj
+*.a
+*.lib
+
+# Temporary & Swap Files
+*.tmp
+*.log
+*.swp
+*~
+
+# IDE & Editor Folders
+.vscode/
+.idea/
+.vs/
+*.vcxproj*
+
+# OS Generated Files
+Thumbs.db
+.DS_Store
