@@ -1,0 +1,67 @@
+#include "core/HomeManager.h"
+#include <iostream>
+
+HomeManager* HomeManager::instance = nullptr;
+std::mutex HomeManager::mutex_;
+
+HomeManager::HomeManager() {
+    securitySystem = std::make_unique<SecuritySystem>(this);
+}
+
+HomeManager* HomeManager::getInstance() {
+    std::lock_guard<std::mutex> lock(mutex_);
+    if (instance == nullptr) {
+        instance = new HomeManager();
+    }
+    return instance;
+}
+
+void HomeManager::addDevice(const std::string& id, std::shared_ptr<IDevice> device) {
+    registeredDevices[id] = device;
+}
+
+std::shared_ptr<IDevice> HomeManager::getDevice(const std::string& id) {
+    if (registeredDevices.find(id) != registeredDevices.end()) {
+        return registeredDevices[id];
+    }
+    return nullptr;
+}
+
+void HomeManager::turnOffAll() {
+    for (auto const& pair : registeredDevices) {
+        pair.second->turnOff();
+    }
+}
+
+void HomeManager::lockAllDoors() {
+    auto lock = getDevice("PuertaPrincipal");
+    if(lock) lock->turnOn();
+}
+
+void HomeManager::unlockAllDoors() {
+    auto lock = getDevice("PuertaPrincipal");
+    if(lock) lock->turnOff();
+}
+
+SecuritySystem* HomeManager::getSecuritySystem() {
+    return securitySystem.get();
+}
+
+void HomeManager::onSensorTriggered(const std::string& eventType, const std::string& source) {
+    if (eventType == "MOTION_DETECTED") {
+        std::cout << "[Hub] Procesando evento de sensor: " << source << "\n";
+        securitySystem->triggerSensor();
+    }
+}
+
+void HomeManager::activateSirens() {
+    std::cout << "[Hub Action] HACIENDO SONAR LAS SIRENAS FISICAS!\n";
+}
+void HomeManager::notifyPolice() {
+    std::cout << "[Hub Action] LLAMANDO AL 911 VÍA API EXTERNA!\n";
+}
+void HomeManager::turnOnEmergencyLights() {
+    std::cout << "[Hub Action] Encendiendo iluminación de emergencia.\n";
+    auto outdoorGroup = getDevice("GrupoExterior");
+    if(outdoorGroup) outdoorGroup->turnOn();
+}
