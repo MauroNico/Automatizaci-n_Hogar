@@ -19,5 +19,5 @@ std::shared_ptr<IDevice> HighSecurityLockProvisioner::provisionDevice(const std:
 }
 
 std::shared_ptr<IDevice> ZigbeeRelayProvisioner::provisionDevice(const std::string& name) const {
-    return std::make_shared<ZigbeeDeviceHandler>(name, new ZigbeeNode(), 0x1A);
+    return std::make_shared<ZigbeeDeviceHandler>(name, std::make_unique<ZigbeeNode>(), 0x1A);
 }
