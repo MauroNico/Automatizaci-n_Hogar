@@ -45,7 +45,5 @@ A continuación, se detalla la correspondencia entre los conceptos del dominio i
 El proyecto separa de forma estricta las interfaces/definiciones (`.h` en `include/`) de sus implementaciones (`.cpp` en `src/`).
 
 ```bash
-mingw32-make
-.\SmartHomeOS.exe
-mingw32-clean --para borrar
+mingw
 ```

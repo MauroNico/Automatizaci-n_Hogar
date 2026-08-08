@@ -16,12 +16,17 @@ int main() {
     HomeManager* hub = HomeManager::getInstance();
 
     // Provisionar dispositivos en el hub
-    auto secureDoor = DeviceProvisioner::provisionDevice("HighSecurityLock", "Puerta Principal");
+    std::unique_ptr<DeviceProvisioner> highSecLockFactory = std::make_unique<HighSecurityLockProvisioner>();
+    auto secureDoor = highSecLockFactory->provisionDevice("Puerta Principal");
+    
     auto autoLockingSecureDoor = std::make_shared<AutoLockingDevice>(secureDoor);
     hub->addDevice("PuertaPrincipal", autoLockingSecureDoor);
 
-    auto zigbeeLight = DeviceProvisioner::provisionDevice("ZigbeeRelay", "Luz Porche (Zigbee)");
-    auto cocinaLight = DeviceProvisioner::provisionDevice("WiFiLight", "Luz Cocina");
+    std::unique_ptr<DeviceProvisioner> zigbeeFactory = std::make_unique<ZigbeeRelayProvisioner>();
+    auto zigbeeLight = zigbeeFactory->provisionDevice("Luz Porche (Zigbee)");
+    
+    std::unique_ptr<DeviceProvisioner> wifiLightFactory = std::make_unique<WiFiLightProvisioner>();
+    auto cocinaLight = wifiLightFactory->provisionDevice("Luz Cocina");
     
     auto outdoorGroup = std::make_shared<DeviceGroup>("Grupo Exterior");
     outdoorGroup->add(zigbeeLight);
