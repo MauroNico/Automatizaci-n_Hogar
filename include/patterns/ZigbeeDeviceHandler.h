@@ -3,7 +3,7 @@
 #include "devices/ZigbeeAPI.h"
 #include <memory>
 
-// Concepto real: Integración o Driver de dispositivo Zigbee (Implementa Adapter)
+// Concepto real: Integración o Driver de dispositivo Zigbee (dapter)
 class ZigbeeDeviceHandler : public IDevice {
 private:
     std::string deviceName;

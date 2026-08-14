@@ -1,12 +1,12 @@
 #pragma once
 #include "core/HomeManager.h"
 
-// Concepto real: Una Macro de automatización (Implementa Template Method)
+// automatización (Template)
 class SmartRoutine {
 protected:
     HomeManager* hub;
     
-    // Pasos fijos que todas las rutinas deben pensar cómo implementar
+    // pasos que todas las rutinas deben implementar
     virtual void configureLighting() = 0;
     virtual void configureSecurity() = 0;
 

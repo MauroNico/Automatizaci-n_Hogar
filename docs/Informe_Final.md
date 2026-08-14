@@ -40,6 +40,14 @@ A continuación, se detalla la correspondencia entre los conceptos del dominio i
    - **Dominio:** Macros de Automatización del Hogar.
    - **Resolución:** Establece el algoritmo core o receta general de las rutinas (`run()`), forzando y orquestando a cada automatización concreta a ajustar el ecosistema de la casa interactuando obligatoriamente tanto con los grupos de luces como con el panel de alarma.
 
+## Consideraciones particulares de diseño
+
+### Composite Transparente vs. Seguro
+En la implementación del patrón **Composite** (`IDevice`, `DeviceGroup`, etc.), se optó por la variante "transparente" clásica de GoF. Esto significa que los métodos `add()` y `remove()` se definen en la interfaz base `IDevice` con una implementación vacía por defecto, en lugar de ser exclusivos de `DeviceGroup`.
+
+- **Trade-off (Ventaja - Simplicidad):** Se prioriza la uniformidad. El cliente puede tratar a todos los objetos (nodos hoja o compuestos) exactamente de la misma manera a través de la interfaz `IDevice`, sin necesidad de hacer *downcasting* (ej. `dynamic_cast`) ni preguntar de qué tipo son.
+- **Trade-off (Desventaja - Seguridad):** Se sacrifica seguridad en tiempo de compilación. Técnicamente, el código permite llamar a `add()` sobre un `SmartLight` (un nodo hoja que no debería tener hijos). Al ser "transparente", la llamada compila y simplemente no hace nada (falla silenciosamente), lo cual exige mayor cuidado por parte del programador cliente.
+
 ## Compilación y Ejecución (CMake)
 
 El proyecto separa de forma estricta las interfaces/definiciones (`.h` en `include/`) de sus implementaciones (`.cpp` en `src/`).

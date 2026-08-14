@@ -3,7 +3,7 @@
 #include <memory>
 #include <string>
 
-// Concepto real: Provisionador de Hardware de IoT (Implementa Factory Method)
+// Provisionador de Hardware de IoT (Implementa Factory Method)
 class DeviceProvisioner {
 public:
     virtual ~DeviceProvisioner() = default;
