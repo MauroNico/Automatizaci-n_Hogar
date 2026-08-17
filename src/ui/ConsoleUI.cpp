@@ -288,6 +288,7 @@ void run(HomeManager* homeManager, std::shared_ptr<MotionSensor> motionSensor) {
         if (selectedOption == 6 || selectedOption == 0) {
             std::cout << "Saliendo del sistema...\n";
             break;
+    
         }
         
         switch (selectedOption) {

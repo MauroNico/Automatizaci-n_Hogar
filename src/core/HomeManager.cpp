@@ -16,6 +16,14 @@ HomeManager* HomeManager::getInstance() {
     return instance;
 }
 
+void HomeManager::destroyInstance() {
+    std::lock_guard<std::mutex> lock(mutex_); 
+    if (instance != nullptr) {
+        delete instance;      
+        instance = nullptr;   
+    }
+}
+
 void HomeManager::addDevice(const std::string& id, std::shared_ptr<IDevice> device) {
     registeredDevices[id] = device;
 }

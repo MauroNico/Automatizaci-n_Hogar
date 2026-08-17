@@ -1,7 +1,7 @@
 CXX = g++
 CXXFLAGS = -std=c++14 -Wall -Iinclude -Iinclude/core -Iinclude/devices -Iinclude/patterns
 
-# Lista de todos los archivos fuente
+# Lista de  los archivos fuente 
 SRCS = src/main.cpp \
        src/devices/Devices.cpp \
        src/patterns/ZigbeeDeviceHandler.cpp \
@@ -10,7 +10,8 @@ SRCS = src/main.cpp \
        src/patterns/SecuritySystem.cpp \
        src/patterns/DeviceAddons.cpp \
        src/patterns/SmartRoutine.cpp \
-       src/core/HomeManager.cpp
+       src/core/HomeManager.cpp \
+       src/ui/ConsoleUI.cpp
 
 # Reemplaza la extensión .cpp por .o para los objetos
 OBJS = $(SRCS:.cpp=.o)

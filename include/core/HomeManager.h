@@ -24,6 +24,7 @@ public:
     void operator=(const HomeManager&) = delete;
 
     static HomeManager* getInstance();
+    static void destroyInstance();
     
 
     void addDevice(const std::string& id, std::shared_ptr<IDevice> device);

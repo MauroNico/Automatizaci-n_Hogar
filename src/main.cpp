@@ -18,12 +18,16 @@ int main() {
         
         UI::run(homeManager, hallwayMotionSensor);
 
+        HomeManager::destroyInstance();
+
     } catch (const std::exception& error) {
         
         std::cerr << "\n[Error Critico] Excepcion no controlada: " << error.what() << "\n";
+        HomeManager::destroyInstance();
         return 1;
     } catch (...) {
         std::cerr << "\n[Error Critico] Ocurrio un error desconocido en el sistema.\n";
+        HomeManager::destroyInstance();
         return 1;
     }
     
