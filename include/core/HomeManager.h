@@ -27,6 +27,7 @@ public:
 
     void addDevice(const std::string& id, std::shared_ptr<IDevice> device);
     std::shared_ptr<IDevice> getDevice(const std::string& id);
+    size_t getDeviceCount() const;
     
     void turnOffAll();
     void lockAllDoors();

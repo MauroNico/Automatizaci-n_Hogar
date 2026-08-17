@@ -39,6 +39,7 @@ public:
     void setArmedMode();
     void setDisarmedMode();
     void setNightMode();
+    std::string getCurrentModeName() const;
 };
 
 class ArmedMode : public ISecurityMode {

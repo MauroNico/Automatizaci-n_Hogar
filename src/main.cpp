@@ -49,10 +49,13 @@ void deviceMenu(HomeManager* hub) {
         std::cout << "4. Crear Zigbee Relay\n";
         std::cout << "5. Encender dispositivo\n";
         std::cout << "6. Apagar dispositivo\n";
-        std::cout << "7. Volver\n";
+        std::cout << "7. Envolver dispositivo en Auto-Locking\n";
+        std::cout << "8. Crear grupo de dispositivos\n";
+        std::cout << "9. Agregar dispositivo a grupo\n";
+        std::cout << "10. Volver\n";
         
         int opt = getIntInput("Opcion: ");
-        if (opt == 7) break;
+        if (opt == 10) break;
         
         if (opt >= 1 && opt <= 4) {
             std::string id = getStringInput("ID: ");
@@ -94,6 +97,48 @@ void deviceMenu(HomeManager* hub) {
             } catch (const std::exception& e) {
                 std::cout << "Error: " << e.what() << "\n";
             }
+        } else if (opt == 7) {
+            std::string id = getStringInput("ID del dispositivo a envolver: ");
+            try {
+                auto dev = hub->getDevice(id);
+                if (dev) {
+                    auto wrappedDev = std::make_shared<AutoLockingDevice>(dev);
+                    hub->addDevice(id, wrappedDev);
+                    std::cout << "Dispositivo [" << id << "] envuelto en Auto-Locking exitosamente.\n";
+                } else {
+                    std::cout << "No existe un dispositivo con ese ID.\n";
+                }
+            } catch (const std::exception& e) {
+                std::cout << "Error: " << e.what() << "\n";
+            }
+        } else if (opt == 8) {
+            std::string id = getStringInput("ID del nuevo grupo: ");
+            std::string name = getStringInput("Nombre del grupo: ");
+            try {
+                auto group = std::make_shared<DeviceGroup>(name);
+                hub->addDevice(id, group);
+                std::cout << "Grupo de dispositivos creado con exito.\n";
+            } catch (const std::exception& e) {
+                std::cout << "Error al crear el grupo: " << e.what() << "\n";
+            }
+        } else if (opt == 9) {
+            std::string groupId = getStringInput("ID del grupo: ");
+            std::string devId = getStringInput("ID del dispositivo a agregar: ");
+            try {
+                auto group = hub->getDevice(groupId);
+                auto dev = hub->getDevice(devId);
+                
+                if (!group) {
+                    std::cout << "No existe el grupo con ese ID.\n";
+                } else if (!dev) {
+                    std::cout << "No existe el dispositivo con ese ID.\n";
+                } else {
+                    group->add(dev);
+                    std::cout << "Dispositivo agregado al grupo exitosamente.\n";
+                }
+            } catch (const std::exception& e) {
+                std::cout << "Error: " << e.what() << "\n";
+            }
         } else {
             std::cout << "Opcion invalida.\n";
         }
@@ -102,9 +147,12 @@ void deviceMenu(HomeManager* hub) {
 
 void securityMenu(HomeManager* hub, std::shared_ptr<MotionSensor> sensor) {
     while (true) {
+        auto secSys = hub->getSecuritySystem();
+        std::string modeName = secSys ? secSys->getCurrentModeName() : "[No disponible]";
+
         std::cout << "\n==================================================\n";
         std::cout << "--- SEGURIDAD ---\n";
-        std::cout << "Estado actual: [No disponible a traves de la API]\n";
+        std::cout << "Estado actual: " << modeName << "\n";
         std::cout << "1. Activar Armed Mode\n";
         std::cout << "2. Activar Night Mode\n";
         std::cout << "3. Activar Disarmed Mode\n";
@@ -114,7 +162,6 @@ void securityMenu(HomeManager* hub, std::shared_ptr<MotionSensor> sensor) {
         int opt = getIntInput("Opcion: ");
         if (opt == 5) break;
         
-        auto secSys = hub->getSecuritySystem();
         if (!secSys) {
             std::cout << "El sistema de seguridad no esta disponible.\n";
             continue;
@@ -191,11 +238,13 @@ void sensorMenu(std::shared_ptr<MotionSensor> sensor) {
 }
 
 void showSystemStatus(HomeManager* hub) {
+    auto secSys = hub->getSecuritySystem();
+    std::string modeName = secSys ? secSys->getCurrentModeName() : "[No disponible]";
+
     std::cout << "\n==================================================\n";
     std::cout << "--- ESTADO DEL SISTEMA ---\n";
-    std::cout << "Cantidad de dispositivos registrados: [No disponible a traves de la API]\n";
-    std::cout << "Estado del SecuritySystem: [No disponible a traves de la API]\n";
-    std::cout << "Informacion general: La API actual no expone metodos publicos para consultar el estado interno.\n";
+    std::cout << "Cantidad de dispositivos registrados: " << hub->getDeviceCount() << "\n";
+    std::cout << "Estado del SecuritySystem: " << modeName << "\n";
     std::cout << "==================================================\n";
 }
 
