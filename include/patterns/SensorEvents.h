@@ -3,14 +3,14 @@
 #include <vector>
 #include <algorithm>
 
-// Concepto real: Escuchador de Eventos de la Casa (Implementa Observer)
+// escuchador de Eventos de la Casa (Observer)
 class ISensorListener {
 public:
     virtual ~ISensorListener() = default;
     virtual void onSensorTriggered(const std::string& eventType, const std::string& sensorName) = 0;
 };
 
-// Concepto real: Un sensor físico de movimiento (Actúa como Subject)
+//sensor físico de movimiento (Sujeto)
 class MotionSensor {
 private:
     std::string name;

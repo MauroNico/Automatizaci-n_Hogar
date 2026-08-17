@@ -1,12 +1,8 @@
 #include "patterns/ZigbeeDeviceHandler.h"
 #include <iostream>
 
-ZigbeeDeviceHandler::ZigbeeDeviceHandler(const std::string& name, ZigbeeNode* hardware, uint8_t endpoint)
-    : deviceName(name), hardwareNode(hardware), zigbeeEndpoint(endpoint) {}
-
-ZigbeeDeviceHandler::~ZigbeeDeviceHandler() {
-    delete hardwareNode;
-}
+ZigbeeDeviceHandler::ZigbeeDeviceHandler(const std::string& name, std::unique_ptr<ZigbeeNode> hardware, uint8_t endpoint)
+    : deviceName(name), hardwareNode(std::move(hardware)), zigbeeEndpoint(endpoint) {}
 
 void ZigbeeDeviceHandler::turnOn() {
     std::cout << "ZigbeeHandler [" << deviceName << "]: Transmitiendo paquete de encendido a la red mesh.\n";

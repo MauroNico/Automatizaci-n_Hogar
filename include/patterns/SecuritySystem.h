@@ -5,7 +5,7 @@
 
 class SecuritySystem;
 
-// Concepto real: Enlace para accionar hardware de emergencia
+// Salta hardware de emergencia
 class ISecurityActionHandler {
 public:
     virtual ~ISecurityActionHandler() = default;
@@ -14,7 +14,7 @@ public:
     virtual void turnOnEmergencyLights() = 0;
 };
 
-// Concepto real: Modo de Operación del Panel de Alarma (Implementa State)
+//Operaciones del Panel de Alarma (State)
 class ISecurityMode {
 public:
     virtual ~ISecurityMode() = default;
@@ -39,6 +39,7 @@ public:
     void setArmedMode();
     void setDisarmedMode();
     void setNightMode();
+    std::string getCurrentModeName() const;
 };
 
 class ArmedMode : public ISecurityMode {

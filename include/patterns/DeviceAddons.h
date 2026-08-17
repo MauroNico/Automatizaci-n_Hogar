@@ -3,7 +3,7 @@
 #include <memory>
 #include <string>
 
-// Concepto real: Una cerradura con auditoría de seguridad (Implementa Decorator)
+// Una cerradura con auditoría de seguridad (Decorator)
 class AuditedDevice : public IDevice {
 private:
     std::shared_ptr<IDevice> baseDevice;
@@ -14,7 +14,7 @@ public:
     std::string getName() const override;
 };
 
-// Concepto real: Una cerradura o puerta que se bloquea sola (Implementa Decorator)
+// cerradura o puerta que se bloquea sola (Decorator)
 class AutoLockingDevice : public IDevice {
 private:
     std::shared_ptr<IDevice> baseDevice;

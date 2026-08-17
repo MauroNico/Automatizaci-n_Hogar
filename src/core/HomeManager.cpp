@@ -27,6 +27,10 @@ std::shared_ptr<IDevice> HomeManager::getDevice(const std::string& id) {
     return nullptr;
 }
 
+size_t HomeManager::getDeviceCount() const {
+    return registeredDevices.size();
+}
+
 void HomeManager::turnOffAll() {
     for (auto const& pair : registeredDevices) {
         pair.second->turnOff();

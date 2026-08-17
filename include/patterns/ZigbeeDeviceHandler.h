@@ -1,16 +1,17 @@
 #pragma once
 #include "devices/Devices.h"
 #include "devices/ZigbeeAPI.h"
+#include <memory>
 
-// Concepto real: Integración o Driver de dispositivo Zigbee (Implementa Adapter)
+// Concepto real: Integración o Driver de dispositivo Zigbee (dapter)
 class ZigbeeDeviceHandler : public IDevice {
 private:
     std::string deviceName;
-    ZigbeeNode* hardwareNode;
+    std::unique_ptr<ZigbeeNode> hardwareNode;
     uint8_t zigbeeEndpoint;
 public:
-    ZigbeeDeviceHandler(const std::string& name, ZigbeeNode* hardware, uint8_t endpoint);
-    ~ZigbeeDeviceHandler();
+    ZigbeeDeviceHandler(const std::string& name, std::unique_ptr<ZigbeeNode> hardware, uint8_t endpoint);
+    ~ZigbeeDeviceHandler() = default;
     
     void turnOn() override;
     void turnOff() override;

@@ -18,6 +18,10 @@ void SecuritySystem::setArmedMode() { currentMode->switchToArmed(this); }
 void SecuritySystem::setDisarmedMode() { currentMode->switchToDisarmed(this); }
 void SecuritySystem::setNightMode() { currentMode->switchToNightMode(this); }
 
+std::string SecuritySystem::getCurrentModeName() const {
+    return currentMode->getModeName();
+}
+
 // ArmedMode
 void ArmedMode::onSensorTripped(SecuritySystem* system) {
     std::cout << "[ArmedMode] BRECHA DE SEGURIDAD! Iniciando protocolos de panico...\n";
