@@ -1,13 +1,12 @@
 #pragma once
 
-#include "core/HomeManager.h"
-#include "patterns/SensorEvents.h"
-
 #include <memory>
 
 
+class HomeManager;
+class MotionSensor;
+
 namespace UI {
-
-    void run(HomeManager* hub, std::shared_ptr<MotionSensor> sensor);
-
+    
+    void run(HomeManager* homeManager, std::shared_ptr<MotionSensor> motionSensor);
 }
