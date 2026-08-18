@@ -251,6 +251,11 @@ void showSystemStatus(HomeManager* homeManager) {
     std::cout << "Cantidad de dispositivos registrados: " << homeManager->getDeviceCount() << "\n";
     std::cout << "Estado del SecuritySystem: " << modeName << "\n";
     std::cout << "==================================================\n";
+    std::cout <<"\n";
+
+    homeManager->listDevices();
+
+    std::cout << "==================================================\n";
 }
 
 } 

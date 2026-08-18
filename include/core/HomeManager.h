@@ -7,9 +7,7 @@
 #include <map>
 #include <string>
 
-// Hub Principal (Singleton)
-// El mutex protege la inicialización de la instancia única frente a accesos concurrentes.
-// Las operaciones sobre el estado interno del HomeManager no están sincronizadas de forma general.
+
 class HomeManager : public ISensorListener, public ISecurityActionHandler {
 private:
     static HomeManager* instance;
@@ -46,4 +44,5 @@ public:
     void activateSirens() override;
     void notifyPolice() override;
     void turnOnEmergencyLights() override;
+    void listDevices() const;
 };

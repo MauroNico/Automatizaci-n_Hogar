@@ -7,12 +7,6 @@ std::mutex HomeManager::mutex_;
 HomeManager::HomeManager() {
     securitySystem = std::make_unique<SecuritySystem>(this);
     
-    auto puertaPrincipal = std::make_shared<SmartLock>("Puerta Principal");
-    addDevice("PuertaPrincipal", puertaPrincipal);
-
-    auto grupoPuertas = std::make_shared<DeviceGroup>("Grupo Puertas");
-    grupoPuertas->add(puertaPrincipal);
-    addDevice("GrupoPuertas", grupoPuertas);
 }
 
 HomeManager* HomeManager::getInstance() {
@@ -83,4 +77,15 @@ void HomeManager::turnOnEmergencyLights() {
     std::cout << "[Hub Action] Encendiendo iluminación de emergencia.\n";
     auto outdoorGroup = getDevice("GrupoExterior");
     if(outdoorGroup) outdoorGroup->turnOn();
+}
+
+void HomeManager::listDevices() const {
+    std::cout << "--- Dispositivos Registrados ---\n";
+    if (registeredDevices.empty()) {
+        std::cout << "No hay dispositivos registrados.\n";
+        return;
+    }
+    for (const auto& pair : registeredDevices) {
+        std::cout << "- ID: " << pair.first << " | Nombre: " << pair.second->getName() << "\n";
+    }
 }
