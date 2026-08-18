@@ -6,6 +6,13 @@ std::mutex HomeManager::mutex_;
 
 HomeManager::HomeManager() {
     securitySystem = std::make_unique<SecuritySystem>(this);
+    
+    auto puertaPrincipal = std::make_shared<SmartLock>("Puerta Principal");
+    addDevice("PuertaPrincipal", puertaPrincipal);
+
+    auto grupoPuertas = std::make_shared<DeviceGroup>("Grupo Puertas");
+    grupoPuertas->add(puertaPrincipal);
+    addDevice("GrupoPuertas", grupoPuertas);
 }
 
 HomeManager* HomeManager::getInstance() {
@@ -46,13 +53,13 @@ void HomeManager::turnOffAll() {
 }
 
 void HomeManager::lockAllDoors() {
-    auto lock = getDevice("PuertaPrincipal");
-    if(lock) lock->turnOn();
+    auto group = getDevice("GrupoPuertas");
+    if(group) group->turnOn();
 }
 
 void HomeManager::unlockAllDoors() {
-    auto lock = getDevice("PuertaPrincipal");
-    if(lock) lock->turnOff();
+    auto group = getDevice("GrupoPuertas");
+    if(group) group->turnOff();
 }
 
 SecuritySystem* HomeManager::getSecuritySystem() {

@@ -15,6 +15,14 @@ void AuditedDevice::turnOff() {
 
 std::string AuditedDevice::getName() const { return baseDevice->getName(); }
 
+void AuditedDevice::add(std::shared_ptr<IDevice> device) {
+    baseDevice->add(device);
+}
+
+void AuditedDevice::remove(std::shared_ptr<IDevice> device) {
+    baseDevice->remove(device);
+}
+
 // AutoLockingDevice
 AutoLockingDevice::AutoLockingDevice(std::shared_ptr<IDevice> device) : baseDevice(device) {}
 
@@ -30,3 +38,11 @@ void AutoLockingDevice::turnOff() {
 }
 
 std::string AutoLockingDevice::getName() const { return baseDevice->getName(); }
+
+void AutoLockingDevice::add(std::shared_ptr<IDevice> device) {
+    baseDevice->add(device);
+}
+
+void AutoLockingDevice::remove(std::shared_ptr<IDevice> device) {
+    baseDevice->remove(device);
+}

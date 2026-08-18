@@ -12,6 +12,8 @@ public:
     void turnOn() override;
     void turnOff() override;
     std::string getName() const override;
+    void add(std::shared_ptr<IDevice> device) override;
+    void remove(std::shared_ptr<IDevice> device) override;
 };
 
 // cerradura o puerta que se bloquea sola (Decorator)
@@ -23,4 +25,6 @@ public:
     void turnOn() override;
     void turnOff() override;
     std::string getName() const override;
+    void add(std::shared_ptr<IDevice> device) override;
+    void remove(std::shared_ptr<IDevice> device) override;
 };

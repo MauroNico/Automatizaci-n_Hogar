@@ -63,6 +63,11 @@ void handleDeviceCreation(HomeManager* homeManager, int deviceType) {
         }
         
         if (newDevice) {
+            std::string autoLock = getStringInput("Desea activar Auto-Cierre para este dispositivo? (s/n): ");
+            if (autoLock == "s" || autoLock == "S") {
+                newDevice = std::make_shared<AutoLockingDevice>(newDevice);
+                std::cout << "[Info] Dispositivo creado con funcionalidad de Auto-Cierre (Decorator).\n";
+            }
             homeManager->addDevice(deviceId, newDevice);
             std::cout << "Dispositivo creado y agregado con exito.\n";
         }
@@ -78,22 +83,6 @@ void handleDeviceToggle(HomeManager* homeManager, bool turnOn) {
         if (targetDevice) {
             if (turnOn) targetDevice->turnOn();
             else targetDevice->turnOff();
-        } else {
-            std::cout << "No existe un dispositivo con ese ID.\n";
-        }
-    } catch (const std::exception& error) {
-        std::cout << "Error: " << error.what() << "\n";
-    }
-}
-
-void handleAutoLocking(HomeManager* homeManager) {
-    std::string deviceId = getStringInput("ID del dispositivo a envolver: ");
-    try {
-        auto targetDevice = homeManager->getDevice(deviceId);
-        if (targetDevice) {
-            auto wrappedDevice = std::make_shared<AutoLockingDevice>(targetDevice);
-            homeManager->addDevice(deviceId, wrappedDevice);
-            std::cout << "Dispositivo [" << deviceId << "] envuelto en Auto-Locking exitosamente.\n";
         } else {
             std::cout << "No existe un dispositivo con ese ID.\n";
         }
@@ -144,23 +133,20 @@ void deviceMenu(HomeManager* homeManager) {
         std::cout << "4. Crear Zigbee Relay\n";
         std::cout << "5. Encender dispositivo\n";
         std::cout << "6. Apagar dispositivo\n";
-        std::cout << "7. Envolver dispositivo en Auto-Locking\n";
-        std::cout << "8. Crear grupo de dispositivos\n";
-        std::cout << "9. Agregar dispositivo a grupo\n";
-        std::cout << "10. Volver\n";
+        std::cout << "7. Crear grupo de dispositivos\n";
+        std::cout << "8. Agregar dispositivo a grupo\n";
+        std::cout << "9. Volver\n";
         
         int selectedOption = getIntInput("Opcion: ");
-        if (selectedOption == 10) break;
+        if (selectedOption == 9) break;
         
         if (selectedOption >= 1 && selectedOption <= 4) {
             handleDeviceCreation(homeManager, selectedOption);
         } else if (selectedOption == 5 || selectedOption == 6) {
             handleDeviceToggle(homeManager, selectedOption == 5);
         } else if (selectedOption == 7) {
-            handleAutoLocking(homeManager);
-        } else if (selectedOption == 8) {
             handleGroupCreation(homeManager);
-        } else if (selectedOption == 9) {
+        } else if (selectedOption == 8) {
             handleGroupAddition(homeManager);
         } else {
             std::cout << "Opcion invalida.\n";
