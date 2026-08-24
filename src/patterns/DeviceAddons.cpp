@@ -3,6 +3,8 @@
 
 AuditedDevice::AuditedDevice(std::shared_ptr<IDevice> device) : baseDevice(device) {}
 
+// AuditedDevice
+
 void AuditedDevice::turnOn() {
     std::cout << "[DB_AUDIT] REGISTRO INMUTABLE: Accion de Bloqueo en '" << getName() << "'\n";
     baseDevice->turnOn();

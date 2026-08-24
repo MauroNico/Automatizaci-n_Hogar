@@ -11,7 +11,6 @@ int main() {
         
         HomeManager* homeManager = HomeManager::getInstance();
         
-       
         auto hallwayMotionSensor = std::make_shared<MotionSensor>("Sensor Movimiento Principal");
         hallwayMotionSensor->addListener(homeManager);
 

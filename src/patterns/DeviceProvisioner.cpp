@@ -13,7 +13,7 @@ std::shared_ptr<IDevice> WiFiLockProvisioner::provisionDevice(const std::string&
 }
 
 std::shared_ptr<IDevice> HighSecurityLockProvisioner::provisionDevice(const std::string& name) const {
-    // Fabrica un hardware y le inyecta seguridad adicional de software
+    
     auto baseLock = std::make_shared<SmartLock>(name);
     return std::make_shared<AuditedDevice>(baseLock);
 }

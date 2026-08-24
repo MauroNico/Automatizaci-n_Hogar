@@ -5,7 +5,7 @@ HomeManager* HomeManager::instance = nullptr;
 std::mutex HomeManager::mutex_;
 
 HomeManager::HomeManager() {
-    securitySystem = std::make_unique<SecuritySystem>(this);
+    securitySystem = std::make_unique<SecuritySystem>();
     
 }
 
@@ -46,13 +46,17 @@ void HomeManager::turnOffAll() {
     }
 }
 
+void HomeManager::setDoorsGroup(const std::string& groupId) {
+    doorsGroupId = groupId;
+}
+
 void HomeManager::lockAllDoors() {
-    auto group = getDevice("GrupoPuertas");
+    auto group = getDevice(doorsGroupId);
     if(group) group->turnOn();
 }
 
 void HomeManager::unlockAllDoors() {
-    auto group = getDevice("GrupoPuertas");
+    auto group = getDevice(doorsGroupId);
     if(group) group->turnOff();
 }
 
