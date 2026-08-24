@@ -3,11 +3,8 @@
 
 void MorningRoutine::configureLighting() {
     std::cout << "MorningRoutine: Optimizando luz natural y apagando luces exteriores...\n";
-    auto outdoorGroup = hub->getDevice("GrupoExterior");
-    if (outdoorGroup) outdoorGroup->turnOff();
-    
-    auto indoorGroup = hub->getDevice("LuzCocina");
-    if (indoorGroup) indoorGroup->turnOn();
+    hub->turnOffOutdoorLights();
+    hub->turnOnKitchenLight();
 }
 
 void MorningRoutine::configureSecurity() {

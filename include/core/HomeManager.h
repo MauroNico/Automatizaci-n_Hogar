@@ -16,6 +16,8 @@ private:
     std::map<std::string, std::shared_ptr<IDevice>> registeredDevices;
     std::unique_ptr<SecuritySystem> securitySystem;
     std::string doorsGroupId = "GrupoPuertas";
+    std::string outdoorLightsGroupId = "GrupoExterior";
+    std::string kitchenLightId = "LuzCocina";
 
     HomeManager();
     ~HomeManager() = default;
@@ -36,6 +38,10 @@ public:
     void lockAllDoors();
     void unlockAllDoors();
     void setDoorsGroup(const std::string& groupId);
+    void setOutdoorLightsGroup(const std::string& groupId);
+    void setKitchenLight(const std::string& deviceId);
+    void turnOffOutdoorLights();
+    void turnOnKitchenLight();
     
     SecuritySystem* getSecuritySystem();
 
