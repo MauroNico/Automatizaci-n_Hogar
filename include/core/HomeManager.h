@@ -15,7 +15,6 @@ private:
     
     std::map<std::string, std::shared_ptr<IDevice>> registeredDevices;
     std::unique_ptr<SecuritySystem> securitySystem;
-    std::string doorsGroupId = "GrupoPuertas";
 
     HomeManager();
     ~HomeManager() = default;
@@ -33,9 +32,6 @@ public:
     size_t getDeviceCount() const;
     
     void turnOffAll();
-    void lockAllDoors();
-    void unlockAllDoors();
-    void setDoorsGroup(const std::string& groupId);
     
     SecuritySystem* getSecuritySystem();
 

@@ -1,50 +1,26 @@
 #include "patterns/DeviceAddons.h"
 #include <iostream>
 
-AuditedDevice::AuditedDevice(std::shared_ptr<IDevice> device) : baseDevice(device) {}
+AuditedDevice::AuditedDevice(std::shared_ptr<IDevice> device) : DeviceDecorator(device) {}
 
 // AuditedDevice
 
 void AuditedDevice::turnOn() {
     std::cout << "[DB_AUDIT] REGISTRO INMUTABLE: Accion de Bloqueo en '" << getName() << "'\n";
-    baseDevice->turnOn();
+    DeviceDecorator::turnOn();
 }
 
 void AuditedDevice::turnOff() {
     std::cout << "[DB_AUDIT] REGISTRO INMUTABLE: Accion de Apertura en '" << getName() << "'\n";
-    baseDevice->turnOff();
-}
-
-std::string AuditedDevice::getName() const { return baseDevice->getName(); }
-
-void AuditedDevice::add(std::shared_ptr<IDevice> device) {
-    baseDevice->add(device);
-}
-
-void AuditedDevice::remove(std::shared_ptr<IDevice> device) {
-    baseDevice->remove(device);
+    DeviceDecorator::turnOff();
 }
 
 // AutoLockingDevice
-AutoLockingDevice::AutoLockingDevice(std::shared_ptr<IDevice> device) : baseDevice(device) {}
-
-void AutoLockingDevice::turnOn() { 
-    baseDevice->turnOn(); 
-}
+AutoLockingDevice::AutoLockingDevice(std::shared_ptr<IDevice> device) : DeviceDecorator(device) {}
 
 void AutoLockingDevice::turnOff() {
-    baseDevice->turnOff();
+    DeviceDecorator::turnOff();
     std::cout << "[FIRMWARE] " << getName() << " desbloqueado. Temporizador de Auto-Cierre iniciado...\n";
     std::cout << "[FIRMWARE] Tiempo agotado. Asegurando " << getName() << " de nuevo.\n";
-    baseDevice->turnOn();
-}
-
-std::string AutoLockingDevice::getName() const { return baseDevice->getName(); }
-
-void AutoLockingDevice::add(std::shared_ptr<IDevice> device) {
-    baseDevice->add(device);
-}
-
-void AutoLockingDevice::remove(std::shared_ptr<IDevice> device) {
-    baseDevice->remove(device);
+    DeviceDecorator::turnOn();
 }

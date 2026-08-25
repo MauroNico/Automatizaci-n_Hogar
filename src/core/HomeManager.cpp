@@ -46,20 +46,6 @@ void HomeManager::turnOffAll() {
     }
 }
 
-void HomeManager::setDoorsGroup(const std::string& groupId) {
-    doorsGroupId = groupId;
-}
-
-void HomeManager::lockAllDoors() {
-    auto group = getDevice(doorsGroupId);
-    if(group) group->turnOn();
-}
-
-void HomeManager::unlockAllDoors() {
-    auto group = getDevice(doorsGroupId);
-    if(group) group->turnOff();
-}
-
 SecuritySystem* HomeManager::getSecuritySystem() {
     return securitySystem.get();
 }

@@ -23,16 +23,27 @@ public:
 };
 
 class MorningRoutine : public SmartRoutine {
+private:
+    std::string outdoorLightsId;
+    std::string indoorLightsId;
+    std::string doorsGroupId;
 public:
-    explicit MorningRoutine(HomeManager* manager) : SmartRoutine(manager) {}
+    explicit MorningRoutine(HomeManager* manager, 
+                            const std::string& outdoorId, 
+                            const std::string& indoorId, 
+                            const std::string& doorsId) 
+        : SmartRoutine(manager), outdoorLightsId(outdoorId), indoorLightsId(indoorId), doorsGroupId(doorsId) {}
 protected:
     void configureLighting() override;
     void configureSecurity() override;
 };
 
 class NightRoutine : public SmartRoutine {
+private:
+    std::string doorsGroupId;
 public:
-    explicit NightRoutine(HomeManager* manager) : SmartRoutine(manager) {}
+    explicit NightRoutine(HomeManager* manager, const std::string& doorsId) 
+        : SmartRoutine(manager), doorsGroupId(doorsId) {}
 protected:
     void configureLighting() override;
     void configureSecurity() override;

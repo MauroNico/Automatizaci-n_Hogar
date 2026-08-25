@@ -208,10 +208,10 @@ void routineMenu(HomeManager* homeManager) {
         
         try {
             if (selectedOption == 1) {
-                MorningRoutine routine(homeManager);
+                MorningRoutine routine(homeManager, "GrupoExterior", "LuzCocina", "GrupoPuertas");
                 routine.run();
             } else if (selectedOption == 2) {
-                NightRoutine routine(homeManager);
+                NightRoutine routine(homeManager, "GrupoPuertas");
                 routine.run();
             } else {
                 std::cout << "Opcion invalida.\n";

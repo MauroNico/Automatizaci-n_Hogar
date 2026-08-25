@@ -3,17 +3,18 @@
 
 void MorningRoutine::configureLighting() {
     std::cout << "MorningRoutine: Optimizando luz natural y apagando luces exteriores...\n";
-    auto outdoorGroup = hub->getDevice("GrupoExterior");
+    auto outdoorGroup = hub->getDevice(outdoorLightsId);
     if (outdoorGroup) outdoorGroup->turnOff();
     
-    auto indoorGroup = hub->getDevice("LuzCocina");
+    auto indoorGroup = hub->getDevice(indoorLightsId);
     if (indoorGroup) indoorGroup->turnOn();
 }
 
 void MorningRoutine::configureSecurity() {
     std::cout << "MorningRoutine: Abriendo la casa para el dia...\n";
     hub->getSecuritySystem()->setDisarmedMode();
-    hub->unlockAllDoors();
+    auto doors = hub->getDevice(doorsGroupId);
+    if (doors) doors->turnOff();
 }
 
 void NightRoutine::configureLighting() {
@@ -23,6 +24,7 @@ void NightRoutine::configureLighting() {
 
 void NightRoutine::configureSecurity() {
     std::cout << "NightRoutine: Activando proteccion perimetral...\n";
-    hub->lockAllDoors();
+    auto doors = hub->getDevice(doorsGroupId);
+    if (doors) doors->turnOn();
     hub->getSecuritySystem()->setNightMode();
 }
