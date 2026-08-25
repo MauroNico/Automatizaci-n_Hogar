@@ -50,24 +50,6 @@ void HomeManager::setDoorsGroup(const std::string& groupId) {
     doorsGroupId = groupId;
 }
 
-void HomeManager::setOutdoorLightsGroup(const std::string& groupId) {
-    outdoorLightsGroupId = groupId;
-}
-
-void HomeManager::setKitchenLight(const std::string& deviceId) {
-    kitchenLightId = deviceId;
-}
-
-void HomeManager::turnOffOutdoorLights() {
-    auto g = getDevice(outdoorLightsGroupId);
-    if (g) g->turnOff();
-}
-
-void HomeManager::turnOnKitchenLight() {
-    auto d = getDevice(kitchenLightId);
-    if (d) d->turnOn();
-}
-
 void HomeManager::lockAllDoors() {
     auto group = getDevice(doorsGroupId);
     if(group) group->turnOn();
@@ -97,7 +79,7 @@ void HomeManager::notifyPolice() {
 }
 void HomeManager::turnOnEmergencyLights() {
     std::cout << "[Hub Action] Encendiendo iluminación de emergencia.\n";
-    auto outdoorGroup = getDevice(outdoorLightsGroupId);
+    auto outdoorGroup = getDevice("GrupoExterior");
     if(outdoorGroup) outdoorGroup->turnOn();
 }
 
